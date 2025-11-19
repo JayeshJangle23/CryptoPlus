@@ -8,7 +8,7 @@ import Profile from "./pages/Profile";
 import News from "./pages/News";
 import Dictionary from "./pages/Dictionary";
 import Publications from "./pages/Publications";
-import Topgl from "./pages/topgl";
+import Topgl from "./pages/Topgl";
 import Logout from "./pages/Logout";
 
 const App = () => {
