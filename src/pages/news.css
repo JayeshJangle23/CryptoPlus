@@ -1,85 +1,62 @@
-/* Container holding all news boxes */
-.news-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
-  background-color: #121212;
+.dict-page {
 }
 
-/* Individual news card */
-.news-box {
-  background-color: #1e1e1e; /* slightly lighter dark background */
-  border: 2px solid gold;     /* clear gold border */
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3); /* soft glowing shadow */
-  transition: transform 0.3s, box-shadow 0.3s;
+
+.alpha-clear {
+background: transparent;
+border: 1px solid gold;
+color: gold;
+padding: 0.4rem 0.7rem;
+border-radius: 6px;
 }
 
-.news-box:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6); /* stronger glow on hover */
+
+/* Dictionary Cards */
+.card {
+background-color: #1e1e1e;
+border: 2px solid gold;
+border-radius: 12px;
+padding: 1.5rem;
+box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Image section */
-.news-image img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-bottom: 1px solid gold; /* separates image from content */
+
+.card:hover {
+transform: scale(1.03);
+box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
 }
 
-/* Content section */
-.news-info {
-  padding: 1rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-family: "Montserrat", sans-serif;
-  color: white;
+
+.tag {
+background-color: gold;
+color: black;
+padding: 0.3rem 0.6rem;
+border-radius: 6px;
+font-weight: bold;
+font-size: 0.9rem;
 }
 
-.news-date {
-  color: gold;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+
+.term {
+font-size: 1.4rem;
+font-weight: bold;
+color: white;
 }
 
-.news-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.8rem;
+
+.card p {
+color: #ccc;
+margin-top: 0.8rem;
+line-height: 1.5;
 }
 
-.news-body {
-  font-size: 1rem;
-  color: #ccc;
-  margin-bottom: 1rem;
-  max-height: 100px;
-  overflow: hidden;
+
+/* Layout */
+.container {
+width: 100%;
+margin: auto;
 }
 
-.news-source {
-  font-size: 0.9rem;
-  color: #ffd700;
-  margin-bottom: 1rem;
-}
 
-/* Read More button */
-.btn-readmore {
-  background-color: gold;
-  color: black;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: bold;
-  width: fit-content;
-  transition: 0.3s;
-}
-
-.btn-readmore:hover {
-  background-color: #ffd633;
-}
+/* End of file */ 

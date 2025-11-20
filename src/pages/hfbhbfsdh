@@ -1,0 +1,25 @@
+{/* Alphabet Buttons */}
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+          {alphabet.map((letter) => (
+            <Button
+              key={letter}
+              variant={alpha === letter ? "contained" : "outlined"}
+              color={alpha === letter ? "primary" : "inherit"}
+              onClick={() => setAlpha(alpha === letter ? "" : letter)}
+              size="small"
+            >
+              {letter}
+            </Button>
+          ))}
+
+          <Button
+            variant="contained"
+            color="error"
+            size="small"
+            sx={{ ml: 1 }}
+            onClick={() => setAlpha("")}
+          >
+            Clear
+          </Button>
+        </Box>
+      </Box>
