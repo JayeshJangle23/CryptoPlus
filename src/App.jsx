@@ -9,26 +9,32 @@ import News from "./pages/News";
 import Dictionary from "./pages/Dictionary";
 import Publications from "./pages/Publications";
 import Topgl from "./pages/Topgl";
-import Logout from "./pages/Logout";
 import Books from "./component/Books";
+
+import { WalletProvider } from "./context/WalletContext";
+
+// New Web3 Page
+import Web3Dashboard from "./pages/Web3Dashboard";
 
 const App = () => {
   return (
-    <Box
-      sx={{ backgroundColor: "#14161a", color: "white", minHeight: "100vh" }}
-    >
-      <Header />
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/coins/:id" element={<CoinPage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/dictionary" element={<Dictionary />} />
-        <Route path="/publications" element={<Books />} />
-        <Route path="/topgl" element={<Topgl />} />
-        <Route path="/logout" element={<Logout />} />
-      </Routes>
-    </Box>
+    <WalletProvider>
+      <Box
+        sx={{ backgroundColor: "#14161a", color: "white", minHeight: "100vh" }}
+      >
+        <Header />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/coins/:id" element={<CoinPage />} />
+          <Route path="/profile" element={<Web3Dashboard />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/dictionary" element={<Dictionary />} />
+          <Route path="/publications" element={<Books />} />
+          <Route path="/topgl" element={<Topgl />} />
+
+        </Routes>
+      </Box>
+    </WalletProvider>
   );
 };
 

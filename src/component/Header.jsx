@@ -62,9 +62,9 @@ function Header() {
     handleMenuClose();
     navigate("/topgl");
   };
-  const handleLogout = () => {
+  const handleLogin = () => {
     handleMenuClose();
-    navigate("/logout");
+    navigate("/profile");
   };
 
   return (
@@ -108,6 +108,7 @@ function Header() {
                   fontWeight: "bold",
                   "&:hover": { backgroundColor: "#ffd633" },
                 }}
+                onClick={handleLogin}
               >
                 Login
               </Button>
@@ -152,7 +153,6 @@ function Header() {
                 <MenuItem onClick={handlePublications}>Publications</MenuItem>
                 <MenuItem onClick={handleDictionary}>Crypto Dictionary</MenuItem>
                 <MenuItem onClick={handleGL}>Top Gainer/Loser</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </Box>
           </Toolbar>
