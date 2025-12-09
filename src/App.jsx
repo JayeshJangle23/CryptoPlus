@@ -10,6 +10,7 @@ import Dictionary from "./pages/Dictionary";
 import Publications from "./pages/Publications";
 import Topgl from "./pages/Topgl";
 import Logout from "./pages/Logout";
+import Books from "./component/Books";
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/news" element={<News />} />
         <Route path="/dictionary" element={<Dictionary />} />
-        <Route path="/publications" element={<Publications />} />
+        <Route path="/publications" element={<Books />} />
         <Route path="/topgl" element={<Topgl />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
