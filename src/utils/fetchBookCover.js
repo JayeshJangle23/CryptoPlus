@@ -1,5 +1,3 @@
-// fetchBookCover.js
-// Returns a promise resolving to an image URL or null if not found.
 export async function fetchBookCover(title, author) {
   try {
     const q = encodeURIComponent(`${title} ${author}`);
