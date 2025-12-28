@@ -8,7 +8,7 @@ import Profile from "./pages/Profile";
 import News from "./pages/News";
 import Dictionary from "./pages/Dictionary";
 import Publications from "./pages/Publications";
-import Topgl from "./pages/Topgl";
+// import Topgl from "./pages/Topgl";
 import Books from "./component/Books";
 
 import { WalletProvider } from "./context/WalletContext";
@@ -30,7 +30,6 @@ const App = () => {
           <Route path="/news" element={<News />} />
           <Route path="/dictionary" element={<Dictionary />} />
           <Route path="/publications" element={<Books />} />
-          <Route path="/topgl" element={<Topgl />} />
 
         </Routes>
       </Box>

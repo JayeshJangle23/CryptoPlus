@@ -58,10 +58,6 @@ function Header() {
     handleMenuClose();
     navigate("/dictionary");
   };
-  const handleGL = () => {
-    handleMenuClose();
-    navigate("/topgl");
-  };
   const handleLogin = () => {
     handleMenuClose();
     navigate("/profile");
@@ -152,7 +148,6 @@ function Header() {
                 <MenuItem onClick={handleNews}>News</MenuItem>
                 <MenuItem onClick={handlePublications}>Publications</MenuItem>
                 <MenuItem onClick={handleDictionary}>Crypto Dictionary</MenuItem>
-                <MenuItem onClick={handleGL}>Top Gainer/Loser</MenuItem>
               </Menu>
             </Box>
           </Toolbar>
