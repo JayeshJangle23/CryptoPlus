@@ -43,10 +43,23 @@ const CoinsTable = () => {
   }, [savedCoins]);
 
   const fetchCoins = async () => {
-    setLoading(true);
-    const { data } = await axios.get(CoinList(currency));
-    setCoins(data);
-    setLoading(false);
+    // setLoading(true);
+    // const { data } = await axios.get(CoinList(currency));
+    // setCoins(data);
+    // setLoading(false);
+    try {
+      setLoading(true);
+      const { data } = await axios.get(CoinList(currency));
+
+      console.log("Coins API Response:", data);
+
+      setCoins(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Coins Fetch Error:", error);
+      setCoins([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -54,10 +67,17 @@ const CoinsTable = () => {
   }, [currency]);
 
   const handleSearch = () => {
+    // return coins.filter(
+    //   (coin) =>
+    //     coin.name.toLowerCase().includes(search.toLowerCase()) ||
+    //     coin.symbol.toLowerCase().includes(search.toLowerCase()),
+    // );
+    if (!Array.isArray(coins)) return [];
+
     return coins.filter(
       (coin) =>
         coin.name.toLowerCase().includes(search.toLowerCase()) ||
-        coin.symbol.toLowerCase().includes(search.toLowerCase())
+        coin.symbol.toLowerCase().includes(search.toLowerCase()),
     );
   };
 
@@ -83,8 +103,14 @@ const CoinsTable = () => {
             borderRadius: "12px",
             transition: "0.3s",
             "& fieldset": { borderColor: "gold" },
-            "&:hover fieldset": { borderColor: "gold", boxShadow: "0 0 8px gold" },
-            "&.Mui-focused fieldset": { borderColor: "gold", boxShadow: "0 0 12px gold" },
+            "&:hover fieldset": {
+              borderColor: "gold",
+              boxShadow: "0 0 8px gold",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "gold",
+              boxShadow: "0 0 12px gold",
+            },
             "& input": { color: "gold" },
           },
           "& .MuiInputLabel-root": { color: "gold !important" },
@@ -92,22 +118,31 @@ const CoinsTable = () => {
         }}
       />
 
-      <TableContainer component={Paper} sx={{ borderRadius: 3, overflow: "hidden" }}>
+      <TableContainer
+        component={Paper}
+        sx={{ borderRadius: 3, overflow: "hidden" }}
+      >
         {loading ? (
           <LinearProgress sx={{ backgroundColor: "gold" }} />
         ) : (
           <Table>
             <TableHead sx={{ backgroundColor: "#EEBC1D" }}>
               <TableRow>
-                {["Coin", "Price", "24h Change", "Market Cap", "Action"].map((head) => (
-                  <TableCell
-                    key={head}
-                    align={head === "Coin" ? "left" : "right"}
-                    sx={{ fontWeight: 900, fontSize: "24px", fontFamily: "Montserrat" }}
-                  >
-                    {head}
-                  </TableCell>
-                ))}
+                {["Coin", "Price", "24h Change", "Market Cap", "Action"].map(
+                  (head) => (
+                    <TableCell
+                      key={head}
+                      align={head === "Coin" ? "left" : "right"}
+                      sx={{
+                        fontWeight: 900,
+                        fontSize: "24px",
+                        fontFamily: "Montserrat",
+                      }}
+                    >
+                      {head}
+                    </TableCell>
+                  ),
+                )}
               </TableRow>
             </TableHead>
 
@@ -115,9 +150,12 @@ const CoinsTable = () => {
               {handleSearch()
                 .slice((page - 1) * 10, page * 10)
                 .map((row) => {
-                  const profit = row.price_change_percentage_24h > 0;
-                  const isSaved = savedCoins.find((c) => c.id === row.id);
+                  const price = row?.current_price ?? 0;
+                  const priceChange = row?.price_change_percentage_24h ?? 0;
+                  const marketCap = row?.market_cap ?? 0;
 
+                  const profit = priceChange > 0;
+                  const isSaved = savedCoins.find((c) => c.id === row.id);
                   return (
                     <TableRow
                       onClick={() => navigate(`/coins/${row.id}`)}
@@ -131,8 +169,16 @@ const CoinsTable = () => {
                     >
                       <TableCell sx={{ display: "flex", gap: 2 }}>
                         <img src={row.image} alt={row.name} height="50" />
-                        <div style={{ display: "flex", flexDirection: "column" }}>
-                          <span style={{ textTransform: "uppercase", fontSize: 22, color: "white" }}>
+                        <div
+                          style={{ display: "flex", flexDirection: "column" }}
+                        >
+                          <span
+                            style={{
+                              textTransform: "uppercase",
+                              fontSize: 22,
+                              color: "white",
+                            }}
+                          >
                             {row.symbol}
                           </span>
                           <span style={{ color: "gold" }}>{row.name}</span>
@@ -140,7 +186,7 @@ const CoinsTable = () => {
                       </TableCell>
 
                       <TableCell align="right" style={{ color: "white" }}>
-                        {symbol} {numberWithCommas(row.current_price.toFixed(2))}
+                        {symbol} {numberWithCommas(price.toFixed(2))}
                       </TableCell>
 
                       <TableCell
@@ -151,12 +197,12 @@ const CoinsTable = () => {
                         }}
                       >
                         {profit && "+"}
-                        {row.price_change_percentage_24h.toFixed(2)}%
+                        {priceChange.toFixed(2)}%
                       </TableCell>
 
                       <TableCell align="right" style={{ color: "white" }}>
                         {symbol}{" "}
-                        {numberWithCommas(row.market_cap.toString().slice(0, -6))}M
+                        {numberWithCommas((marketCap / 1000000).toFixed(0))}M
                       </TableCell>
 
                       {/* Save/Remove Button */}
@@ -168,7 +214,9 @@ const CoinsTable = () => {
                             size="small"
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSavedCoins(savedCoins.filter((c) => c.id !== row.id));
+                              setSavedCoins(
+                                savedCoins.filter((c) => c.id !== row.id),
+                              );
                             }}
                           >
                             Remove
@@ -196,7 +244,7 @@ const CoinsTable = () => {
       </TableContainer>
 
       <Pagination
-        count={Math.ceil(handleSearch()?.length / 10)}
+        count={Math.ceil(handleSearch()?.length || 0) / 10}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -209,7 +257,7 @@ const CoinsTable = () => {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       />
-    <GlobalMarket />
+      <GlobalMarket />
     </Container>
   );
 };
